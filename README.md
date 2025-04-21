@@ -1,1 +1,12 @@
-# Task-1
+import pandas as pd
+
+df = pd.read_csv('/content/marketing_campaign.csv', sep='\t')
+df = df.drop_duplicates()
+df['Income'] = df['Income'].fillna(df['Income'].median())
+df['Education'] = df['Education'].str.title().str.strip()
+df['Marital_Status'] = df['Marital_Status'].str.title().str.strip()
+df['Dt_Customer'] = pd.to_datetime(df['Dt_Customer'], dayfirst=True)
+df.columns = df.columns.str.lower().str.replace(' ', '_')
+df.to_csv('marketing_campaign_cleaned.csv', index=False)
+
+print("Dataset cleaned and saved as 'marketing_campaign_cleaned.csv'")
